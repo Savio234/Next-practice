@@ -2,7 +2,7 @@
 import { InputField } from '@/shared';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
-import styles from './HomeView.module.css'
+// import styles from './HomeView.module.css'
 
 const HomeView = () => {
     const [email, setEmail] = useState<string>('')
@@ -24,6 +24,7 @@ const HomeView = () => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
+        setErrors([])
         setIsSubmitting(false);
     }
 
@@ -49,12 +50,19 @@ const HomeView = () => {
                 placeholder='Re-Enter your password' type='password' required
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <button data-disabled={isSubmitting} type='submit' className='bg-blue-500 disabled:bg-gray-500
-                p-[1rem] rounded-3xl w-[40rem] text-2xl mt-8 h-[4.5rem]'
-                disabled={isSubmitting}
-            >
-                Submit
-            </button>
+            {isSubmitting ? (
+                <button type='button' className={`bg-gray-500 cursor-not-allowed h-[4.5rem]
+                    p-[1rem] rounded-3xl w-[40rem] text-2xl mt-8`}
+                >
+                    Submit
+                </button>
+            ) : (
+                <button type='submit' className={`bg-blue-500
+                    p-[1rem] rounded-3xl w-[40rem] text-2xl mt-8 h-[4.5rem]`}
+                >
+                    Submit
+                </button>
+            )}
         </form>
     </div>
   )
