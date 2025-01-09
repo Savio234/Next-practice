@@ -1,24 +1,44 @@
 'use client';
 import { InputField } from '@/shared';
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
+import styles from './HomeView.module.css'
 
 const HomeView = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
-    const [isSubmitting, setIsSubmmitting] = useState<boolean>(false)
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+    const [errors, setErrors] = useState<string[]>([])
 
     const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsSubmmitting(true)
+        setIsSubmitting(true);
+        if (password !== confirmPassword) {
+            toast.error('Passwords do not match');
+            setIsSubmitting(false);
+            return;
+        }
 
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-        setIsSubmmitting(false);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setIsSubmitting(false);
     }
 
   return (
     <div className='flex flex-col gap-4 w-full h-full items-center justify-center'>
         <form onSubmit={handleSubmitForm} className='flex flex-col gap-4'>
+            {
+                errors?.length > 0 && (
+                    errors.map((error: string, index: number) =>
+                        <div className='bg-red-100 rounded px-4 py-2' key={index}>
+                            <h3 className='text-red-500'>{error}</h3>
+                        </div>
+                    )
+                )
+            }
             <InputField label='Email' placeholder='Enter your email' type='email' required
                 onChange={(e) => setEmail(e.target.value)} value={email}
             />
