@@ -1,0 +1,107 @@
+.input {
+	width: 100%;
+	row-gap: 0rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.input_label {
+	font-size: 1.4rem;
+	line-height: 2.4rem;
+	color: #0A0A0A;
+}
+
+.input_wrapper {
+	position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	padding: 1.6rem;
+	column-gap: 1rem;
+	box-sizing: border-box;
+	background-color: transparent;
+	border: 0.1rem solid #E3E3E3;
+	border-radius: 1.5rem;
+	transition: all 0.1s ease-in;
+	margin-top: 0.6rem;
+}
+.input_wrapper:focus-within {
+	transition: all 0.3s linear;
+}
+.input_wrapper h6 {
+	font-size: 1.4rem;
+	line-height: 2.4rem;
+	font-weight: 500;
+}
+
+.input_icon {
+	position: relative;
+	width: 2.4rem;
+	height: 2.4rem;
+	flex-shrink: 0;
+}
+
+.input_field {
+	all: unset;
+	flex-grow: 1;
+	height: 100%;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	width: 100%;
+}
+.input_field::placeholder {
+	font-size: 1.4rem;
+	line-height: 2.4rem;
+}
+.input_field::-webkit-input-placeholder {
+	display: none;
+}
+.input_field:focus {
+	border: 0;
+}
+
+.icon {
+	position: relative;
+	width: 2.4rem;
+	height: 2.4rem;
+	cursor: pointer;
+	border: none !important;
+	padding: none !important;
+	display: flex;
+	align-items: center;
+}
+
+
+.text p {
+	font-size: 1.2rem;
+	line-height: 1.6rem;
+	width: max-content;
+	height: 1.5rem;
+}
+
+.prefix_divider {
+	width: 0.2rem;
+	height: 2rem;
+	background-color: #A3A3A3;
+}
+
+.suffix_container {
+	display: flex;
+	align-items: center;
+	gap: 2.4rem;
+}
+
+.suffix_container .text p {
+	font-size: 1.4rem;
+	line-height: 2.4rem;
+	width: max-content;
+}
+.suffix_icon {
+	position: relative;
+	width: 2.4rem;
+	height: 2.4rem;
+}
