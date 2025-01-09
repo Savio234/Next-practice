@@ -24,10 +24,11 @@
 	column-gap: 1rem;
 	box-sizing: border-box;
 	background-color: transparent;
-	border: 0.1rem solid #E3E3E3;
+	border: 0.1rem solid #A3A3A3;
 	border-radius: 1.5rem;
 	transition: all 0.1s ease-in;
 	margin-top: 0.6rem;
+	color: #0A0A0A;
 }
 .input_wrapper:focus-within {
 	transition: all 0.3s linear;

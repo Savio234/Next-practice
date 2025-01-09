@@ -1,3 +1,8 @@
+button[data-disabled = "true"] {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
 @media screen and (max-width: 650px) {
     button {
         width: 100%;

@@ -29,7 +29,7 @@ const HomeView = () => {
                 placeholder='Re-Enter your password' type='password' required
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <button type='submit' className='bg-blue-500 disabled:bg-gray-500 
+            <button data-disabled={isSubmitting} type='submit' className='bg-blue-500 disabled:bg-gray-500
                 p-[1rem] rounded-3xl w-[40rem] text-2xl mt-8 h-[4.5rem]'
                 disabled={isSubmitting}
             >
