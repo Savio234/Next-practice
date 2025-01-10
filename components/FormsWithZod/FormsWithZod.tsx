@@ -1,14 +1,14 @@
 'use client';
 import React from 'react';
 import { InputField } from '@/shared';
-import { FieldValues, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema, SignUpSchema, formType } from '@/types/forms';
-import styles from './Forms.module.css'
+import styles from './FormsWithZod.module.css'
 import toast from 'react-hot-toast';
 
-const Forms = () => {
+const FormsWithZod = () => {
     const { register, handleSubmit, 
         formState: { errors, isSubmitting }, 
         reset, 
@@ -16,22 +16,61 @@ const Forms = () => {
         setValue,
         setError,
         getValues
-    } = useForm<SignUpSchema>();
+    } = useForm<SignUpSchema>({
+        resolver: zodResolver(signUpSchema)
+    });
 
-    const onSubmit = async (data: FieldValues) => {
-        await new Promise((resolve: any) => setTimeout(resolve, 2000));
+    const submitForm = async (data: SignUpSchema) => {
+        const response = await fetch('/api/signup', {
+            method: "POST",
+            // body: JSON.stringify(data),
+            body: JSON.stringify({
+                email: data?.email,
+                password: data?.password,
+                confirm_password: data?.confirm_password
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        const responseData = await response.json();
+        if (!response.ok) {
+            toast.error('Submitting form failed')
+        }
+        if (responseData.errors) {
+            const errors = responseData?.errors;
+
+            if (errors?.email) {
+                setError('email', {
+                    type: 'server',
+                    message: errors?.email
+                })
+                toast.error(errors.email);
+            } else if (errors?.password) {
+                setError('password', {
+                    type: 'server',
+                    message: errors?.password
+                })
+                toast.error(errors.password);
+            } else if (errors?.confirm_password) {
+                setError('confirm_password', {
+                    type: 'server',
+                    message: errors?.confirm_password
+                })
+                toast.error(errors.confirm_password);
+            }
+        } else {
+            toast.error('Something went wrong')
+        }
         reset();
     }
   return (
     <div className='flex flex-col gap-4 w-full h-full items-center justify-center'>
-        <h1 className='text-[4.5rem]'>React Hook form without Zod</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 mb-[4rem]'>
+        <h1 className='text-[4.5rem]'>React Hook form with Zod</h1>
+        <form onSubmit={handleSubmit(submitForm)} className='flex flex-col gap-4'>
             <>
-                <InputField register={register('email', {
-                    required: 'Email is required'
-                })} label='Email'
+                <InputField className={`${errors?.email && `border border-red-500`}`} register={register('email')} label='Email'
                     placeholder='Enter your email' type='email'
-                    className={`${errors?.email && `border border-red-500`}`}
                 />
                 {errors?.email && (
                     <p className='text-red-500'>
@@ -41,13 +80,7 @@ const Forms = () => {
             </>
             <>
                 <InputField isPassword label='Password' placeholder='Enter your password' 
-                    type='password' register={register('password', {
-                        required: 'Password is required',
-                        minLength: {
-                            value: 10,
-                            message: 'Password must be at least 10 characters'
-                        }
-                    })}
+                    type='password' register={register('password')}
                     className={`${errors?.password && `border border-red-500`}`}
                 />
                 {errors?.password && (
@@ -59,11 +92,7 @@ const Forms = () => {
             <>
                 <InputField isPassword label='Confirm password'
                     placeholder='Re-Enter your password' type='password'
-                    register={register('confirm_password', {
-                        required: 'Confirm password is required',
-                        validate: (value: any) =>
-                            value === getValues('password') || "Passwords must match"
-                    })}
+                    register={register('confirm_password')}
                     className={`${errors?.confirm_password && `border border-red-500`}`}
                 />
                 {errors?.confirm_password && (
@@ -90,4 +119,4 @@ const Forms = () => {
   )
 }
 
-export default Forms
+export default FormsWithZod
