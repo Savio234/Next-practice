@@ -30,12 +30,15 @@ const HomeView = () => {
 
   return (
     <div className='flex flex-col gap-4 w-full h-full items-center justify-center'>
+        <h1 className='text-[4.5rem]'>Traditional form submission</h1>
         <form onSubmit={handleSubmitForm} className='flex flex-col gap-4'>
             {
                 errors?.length > 0 && (
                     errors.map((error: string, index: number) =>
                         <div className='bg-red-100 rounded px-4 py-2' key={index}>
-                            <h3 className='text-red-500'>{error}</h3>
+                            <h3 className='text-red-500'>
+                                {error}
+                            </h3>
                         </div>
                     )
                 )
@@ -57,8 +60,8 @@ const HomeView = () => {
                     Submit
                 </button>
             ) : (
-                <button type='submit' className={`bg-blue-500
-                    p-[1rem] rounded-3xl w-[40rem] text-2xl mt-8 h-[4.5rem]`}
+                <button type='submit' className={`bg-blue-500 p-[1rem] rounded-3xl w-[40rem]
+                    text-2xl mt-8 h-[4.5rem]`}
                 >
                     Submit
                 </button>
@@ -68,4 +71,4 @@ const HomeView = () => {
   )
 }
 
-export default HomeView
+export default HomeView;
